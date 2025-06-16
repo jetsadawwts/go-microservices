@@ -1,10 +1,9 @@
 package productUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/product/productRepository"
-
+import "github.com/jetsadawwts/go-microservices/modules/product/productRepository"
 
 type (
-	ProductUsecaseService interface {}
+	ProductUsecaseService interface{}
 
 	productUsecase struct {
 		productRepository productRepository.ProductRepositoryService

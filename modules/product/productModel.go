@@ -1,6 +1,6 @@
 package product
 
-import "githib.coom/jetsadawwts/go-microservices/modules/models"
+import "github.com/jetsadawwts/go-microservices/modules/models"
 
 type (
 	CreateProductReq struct {

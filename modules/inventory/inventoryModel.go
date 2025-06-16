@@ -1,8 +1,8 @@
 package inventory
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/modules/models"
-	"githib.coom/jetsadawwts/go-microservices/modules/product"
+	"github.com/jetsadawwts/go-microservices/modules/models"
+	"github.com/jetsadawwts/go-microservices/modules/product"
 )
 
 type (

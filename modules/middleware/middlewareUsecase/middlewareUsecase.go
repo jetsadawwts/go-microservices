@@ -1,6 +1,6 @@
 package middlewareUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/middleware/middlewareRepository"
+import "github.com/jetsadawwts/go-microservices/modules/middleware/middlewareRepository"
 
 type (
 	MiddlewareUsecaseHandler interface{}

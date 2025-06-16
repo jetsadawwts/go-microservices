@@ -1,6 +1,6 @@
 package inventoryUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/inventory/inventoryRepository"
+import "github.com/jetsadawwts/go-microservices/modules/inventory/inventoryRepository"
 
 type (
 	InventoryUsecaseService interface{}

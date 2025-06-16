@@ -1,8 +1,8 @@
 package inventoryHandler
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/config"
-	"githib.coom/jetsadawwts/go-microservices/modules/inventory/inventoryUsecase"
+	"github.com/jetsadawwts/go-microservices/config"
+	"github.com/jetsadawwts/go-microservices/modules/inventory/inventoryUsecase"
 )
 
 type (

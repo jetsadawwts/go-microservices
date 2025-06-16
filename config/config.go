@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+
 	"github.com/joho/godotenv"
 )
 
@@ -44,8 +45,8 @@ type (
 
 	Grpc struct {
 		AuthUrl      string
-		PlayerUrl    string
-		ItemUrl      string
+		UserUrl    string
+		ProductUrl   string
 		InventoryUrl string
 		PaymentUrl   string
 	}
@@ -96,13 +97,13 @@ func LoadConfig(path string) Config {
 		},
 		Grpc: Grpc{
 			AuthUrl:      os.Getenv("GRPC_AUTH_URL"),
-			PlayerUrl:    os.Getenv("GRPC_PLAYER_URL"),
-			ItemUrl:      os.Getenv("GRPC_ITEM_URL"),
+			UserUrl:    os.Getenv("GRPC_USER_URL"),
+			ProductUrl:   os.Getenv("GRPC_PRODUCT_URL"),
 			InventoryUrl: os.Getenv("GRPC_INVENTORY_URL"),
 			PaymentUrl:   os.Getenv("GRPC_PAYMENT_URL"),
 		},
 		Paginate: Paginate{
-			ItemNextPageBasedUrl:      os.Getenv("PAGINATE_ITEM_NEXT_PAGE_BASED_URL"),
+			ItemNextPageBasedUrl:      os.Getenv("PAGINATE_PRODUCT_NEXT_PAGE_BASED_URL"),
 			InventoryNextPageBasedUrl: os.Getenv("PAGINATE_INVENTORY_NEXT_PAGE_BASED_URL"),
 		},
 	}

@@ -1,9 +1,9 @@
 package server
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/modules/payment/paymentHandler"
-	"githib.coom/jetsadawwts/go-microservices/modules/payment/paymentRepository"
-	"githib.coom/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
+	"github.com/jetsadawwts/go-microservices/modules/payment/paymentHandler"
+	"github.com/jetsadawwts/go-microservices/modules/payment/paymentRepository"
+	"github.com/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
 )
 
 func (s *server) paymentService() {

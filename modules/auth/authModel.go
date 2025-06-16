@@ -3,7 +3,7 @@ package auth
 import (
 	"time"
 
-	"githib.coom/jetsadawwts/go-microservices/modules/user"
+	"github.com/jetsadawwts/go-microservices/modules/user"
 )
 
 type (

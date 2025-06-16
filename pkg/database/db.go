@@ -5,18 +5,17 @@ import (
 	"log"
 	"time"
 
-	"githib.coom/jetsadawwts/go-microservices/config"
+	"github.com/jetsadawwts/go-microservices/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-
 func DbConn(pctx context.Context, cfg *config.Config) *mongo.Client {
 	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
 	defer cancel()
 
-	client, err := mongo.Connect(ctx, options.Client(),options.Client().ApplyURI(cfg.Db.Url))
+	client, err := mongo.Connect(ctx, options.Client(), options.Client().ApplyURI(cfg.Db.Url))
 	if err != nil {
 		log.Fatalf("Error: Connect to database error: %s", err.Error())
 	}

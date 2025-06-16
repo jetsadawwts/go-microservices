@@ -1,9 +1,9 @@
 package userUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/user/userRepository"
+import "github.com/jetsadawwts/go-microservices/modules/user/userRepository"
 
 type (
-	UserUsecaseService interface {}
+	UserUsecaseService interface{}
 
 	userUsecase struct {
 		userRepository userRepository.UserRepositoryService

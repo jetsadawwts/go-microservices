@@ -1,13 +1,13 @@
 package paymentHandler
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/config"
-	"githib.coom/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
+	"github.com/jetsadawwts/go-microservices/config"
+	"github.com/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
 )
 
 type (
 	PaymentHttpHandler interface{}
-	paymentHttpHandler        struct {
+	paymentHttpHandler struct {
 		cfg            *config.Config
 		paymentUsecase paymentUsecase.PaymentUsecaseService
 	}

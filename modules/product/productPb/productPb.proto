@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+//Package name
+option go_package = "github.com/jetsadawwts/go-microservices";
+
+//Structures
+message FindProductsInIdsReq {
+    repeated int32 ids = 1;
+}
+
+message FindProductsInIdsRes {
+    repeated Product products = 1;
+}
+
+message Product {
+    string id  = 1;
+    string title = 2;
+    double price = 3;
+    string imageUrl = 4;
+    int32 damage = 5;
+}
+
+//Method
+service ProductGrpcService {
+   rpc FindProductsInIds(FindProductsInIdsReq) returns (FindProductsInIdsRes);
+}
