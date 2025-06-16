@@ -1,10 +1,10 @@
 package paymentUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/payment/paymentRepository"
+import "github.com/jetsadawwts/go-microservices/modules/payment/paymentRepository"
 
 type (
-	PaymentUsecaseService interface {}
-	paymentUsecase struct {
+	PaymentUsecaseService interface{}
+	paymentUsecase        struct {
 		paymentRepository paymentRepository.PaymentRepositoryService
 	}
 )

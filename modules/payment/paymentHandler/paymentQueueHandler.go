@@ -1,6 +1,6 @@
 package paymentHandler
 
-import "githib.coom/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
+import "github.com/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
 
 type (
 	paymentQueueHandler struct {

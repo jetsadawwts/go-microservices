@@ -1,6 +1,6 @@
 package inventoryHandler
 
-import "githib.coom/jetsadawwts/go-microservices/modules/inventory/inventoryUsecase"
+import "github.com/jetsadawwts/go-microservices/modules/inventory/inventoryUsecase"
 
 type (
 	inventoryQueueHandler struct {

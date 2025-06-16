@@ -1,10 +1,9 @@
 package authUsecase
 
-import "githib.coom/jetsadawwts/go-microservices/modules/auth/authRepository"
-
+import "github.com/jetsadawwts/go-microservices/modules/auth/authRepository"
 
 type (
-	AuthUsecaseService interface {}
+	AuthUsecaseService interface{}
 
 	authUsecase struct {
 		authRepository authRepository.AuthRepositoryService

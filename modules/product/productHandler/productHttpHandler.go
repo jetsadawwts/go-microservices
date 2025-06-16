@@ -1,22 +1,22 @@
 package productHandler
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/config"
-	"githib.coom/jetsadawwts/go-microservices/modules/product/productUsecase"
+	"github.com/jetsadawwts/go-microservices/config"
+	"github.com/jetsadawwts/go-microservices/modules/product/productUsecase"
 )
 
 type (
-	ProductHttpHandlerService interface {}
+	ProductHttpHandlerService interface{}
 
 	productHttpHandler struct {
-		cfg *config.Config
+		cfg            *config.Config
 		productUsecase productUsecase.ProductUsecaseService
 	}
 )
 
 func NewProductHttpHandler(cfg *config.Config, productUsecase productUsecase.ProductUsecaseService) ProductHttpHandlerService {
 	return &productHttpHandler{
-		cfg: cfg,
+		cfg:            cfg,
 		productUsecase: productUsecase,
 	}
 }

@@ -1,6 +1,6 @@
 package paymentHandler
 
-import "githib.coom/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
+import "github.com/jetsadawwts/go-microservices/modules/payment/paymentUsecase"
 
 type (
 	paymentGrpcHandler struct {
@@ -8,8 +8,8 @@ type (
 	}
 )
 
-func NewPaymentGrpcHandler(paymentUsecase paymentUsecase.PaymentUsecaseService) paymentGrpcHandler {
-	return paymentGrpcHandler{
+func NewPaymentGrpcHandler(paymentUsecase paymentUsecase.PaymentUsecaseService) *paymentGrpcHandler {
+	return &paymentGrpcHandler{
 		paymentUsecase: paymentUsecase,
 	}
 }

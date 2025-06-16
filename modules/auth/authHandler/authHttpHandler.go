@@ -1,23 +1,22 @@
 package authHandler
 
 import (
-	"githib.coom/jetsadawwts/go-microservices/config"
-	"githib.coom/jetsadawwts/go-microservices/modules/auth/authUsecase"
+	"github.com/jetsadawwts/go-microservices/config"
+	"github.com/jetsadawwts/go-microservices/modules/auth/authUsecase"
 )
 
-
 type (
-	AuthHttpHandlerService interface {}
+	AuthHttpHandlerService interface{}
 
 	authHttpHandler struct {
-		cfg *config.Config
+		cfg         *config.Config
 		authUsecase authUsecase.AuthUsecaseService
 	}
 )
 
 func NewAuthHttpHandler(cfg *config.Config, authUsecase authUsecase.AuthUsecaseService) AuthHttpHandlerService {
 	return &authHttpHandler{
-		cfg: cfg,
+		cfg:         cfg,
 		authUsecase: authUsecase,
 	}
 }
