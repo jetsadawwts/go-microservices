@@ -8,7 +8,7 @@ type (
 		Email     string    `json:"email"`
 		Username  string    `json:"username"`
 		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"update_at"`
+		UpdatedAt time.Time `json:"updated_at"`
 	}
 
 	UserClaims struct {

@@ -35,8 +35,9 @@ type (
 	}
 
 	UserTransaction struct {
-		UserId    string    `json:"user_id" bson:"user_id"`
-		Amount    float64   `bson:"amount"`
-		CreatedAt time.Time `bson:"created_at"`
+		Id        primitive.ObjectID `bson:"_id,omitempty"`
+		UserId    string             `json:"user_id" bson:"user_id"`
+		Amount    float64            `bson:"amount"`
+		CreatedAt time.Time          `bson:"created_at"`
 	}
 )
