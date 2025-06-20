@@ -26,11 +26,17 @@ func (s *server) userService() {
 		grpcServer.Serve(lis)
 	}()
 
-	_ = httpHandler
 	_ = grpcHandler
 	_ = queueHandler
 
 	user := s.app.Group("/user_v1")
 
+	// Health Check
 	user.GET("", s.healthCheckService)
+
+	user.POST("/user/register", httpHandler.CreateUser)
+	user.GET("/user/:user_id", httpHandler.FindOneUserProfile)
+	user.POST("/user/add-money", httpHandler.AddUserMoney)
+	user.GET("/user/account/:user_id", httpHandler.GetUserSavingAccount)
+
 }
