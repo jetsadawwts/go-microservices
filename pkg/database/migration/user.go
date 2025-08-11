@@ -11,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func userDbConn(pctx context.Context, cfg *config.Config) *mongo.Database {
@@ -44,7 +45,10 @@ func UserMigrate(pctx context.Context, cfg *config.Config) {
 		roles := []*user.User{
 			{
 				Email:    "user001@jwt.com",
-				Password: "123456",
+				Password: func () string {
+					hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), bcrypt.DefaultCost)
+					return string(hashedPassword)
+				}(),
 				Username: "User001",
 				UserRoles: []user.UserRole{
 					{
@@ -57,7 +61,10 @@ func UserMigrate(pctx context.Context, cfg *config.Config) {
 			},
 			{
 				Email:    "user002@jwt.com",
-				Password: "123456",
+				Password: func () string {
+					hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), bcrypt.DefaultCost)
+					return string(hashedPassword)
+				}(),
 				Username: "User002",
 				UserRoles: []user.UserRole{
 					{
@@ -70,7 +77,10 @@ func UserMigrate(pctx context.Context, cfg *config.Config) {
 			},
 			{
 				Email:    "admin001@jwt.com",
-				Password: "123456",
+				Password: func () string {
+					hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), bcrypt.DefaultCost)
+					return string(hashedPassword)
+				}(),
 				Username: "Admit001",
 				UserRoles: []user.UserRole{
 					{

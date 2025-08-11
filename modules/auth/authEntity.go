@@ -8,12 +8,13 @@ import (
 
 type (
 	Credential struct {
-		ID          primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
-		UserId      string             `json:"user_id" bson:"user_id,omitempty"`
-		RoleCode    int                `json:"role_code" bson:"role_code"`
-		AccessToken string             `json:"access_token" bson:"access_token"`
-		CreatedAt   time.Time          `json:"created_at" bson:"created_at"`
-		UpdatedAt   time.Time          `json:"updated_at" bson:"updated_at"`
+		Id           primitive.ObjectID `bson:"_id,omitempty"`
+		UserId     string             `bson:"user_id"`
+		RoleCode     int                `bson:"role_code"`
+		AccessToken  string             `bson:"access_token"`
+		RefreshToken string             `bson:"refresh_token"`
+		CreatedAt    time.Time          `bson:"created_at"`
+		UpdatedAt    time.Time          `bson:"updated_at"`
 	}
 
 	Role struct {
@@ -23,4 +24,11 @@ type (
 	}
 
 	UserRoleQueue struct{}
+
+	UpdateRefreshTokenReq struct {
+		UserId string `bson:"user_id"`
+		AccessToken  string `bson:"access_token"`
+		RefreshToken string `bson:"refresh_token"`
+		UpdateAt time.Time `bson:"updated_at"`
+	}
 )
