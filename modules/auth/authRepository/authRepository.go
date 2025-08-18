@@ -9,6 +9,7 @@ import (
 	"github.com/jetsadawwts/go-microservices/modules/auth"
 	userPb "github.com/jetsadawwts/go-microservices/modules/user/userPb"
 	"github.com/jetsadawwts/go-microservices/pkg/grpcconn"
+	"github.com/jetsadawwts/go-microservices/pkg/jwtauth"
 	"github.com/jetsadawwts/go-microservices/pkg/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -23,6 +24,8 @@ type (
 		FindOneUserCredential(pctx context.Context, credentialId string) (*auth.Credential, error)
 		UpdateOneUserCredential(pctx context.Context, credentialId string, req *auth.UpdateRefreshTokenReq) error
 		DeleteOneUserCredential(pctx context.Context, credentialId string) (int64, error) 
+		FindOneAccessToken(pctx context.Context, accessToken string) (*auth.Credential, error)
+		RolesCount(pctx context.Context) (int64, error)
 	}
 
 	authRepository struct {
@@ -43,7 +46,8 @@ func (r *authRepository) authDbConn(pctx context.Context) *mongo.Database {
 func (r *authRepository) CredentialSearch(pctx context.Context, grpcUrl string, req *userPb.CredentialSearchReq) (*userPb.UserProfile, error) {
 	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
 	defer cancel()
-
+	
+	jwtauth.SetApiKeyInContext(&ctx)	
 	conn, err := grpcconn.NewGrpcClient(grpcUrl)
 	if err != nil {
 		log.Printf("Error: gRPC connection failed: %v", err.Error())
@@ -63,6 +67,7 @@ func (r *authRepository) FindOneUserProfileToRefresh(pctx context.Context, grpcU
 	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
 	defer cancel()
 
+	jwtauth.SetApiKeyInContext(&ctx)
 	conn, err := grpcconn.NewGrpcClient(grpcUrl)
 	if err != nil {
 		log.Printf("Error: gRPC connection failed: %v", err.Error())
@@ -153,4 +158,36 @@ func (r *authRepository) DeleteOneUserCredential(pctx context.Context, credentia
 	log.Printf("DeleteOneUserCredential: result: %v", result)
 
 	return result.DeletedCount, nil
+}
+
+func (r *authRepository) FindOneAccessToken(pctx context.Context, accessToken string) (*auth.Credential, error) {
+	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
+	defer cancel()
+
+	db := r.authDbConn(ctx)
+	col := db.Collection("auth")
+
+	credential := new(auth.Credential)
+	if err := col.FindOne(ctx, bson.M{"access_token": accessToken}).Decode(credential); err != nil {
+		log.Printf("Error: FindOneAccessToken failed: %s", err.Error())
+		return nil, errors.New("error: access token not found")
+	}
+
+	return credential, nil
+}
+
+func (r *authRepository) RolesCount(pctx context.Context) (int64, error) {
+	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
+	defer cancel()
+
+	db := r.authDbConn(ctx)
+	col := db.Collection("roles")
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		log.Printf("Error: RolesCount failed: %s", err.Error())
+		return -1, err
+	}
+
+	return count, nil
 }

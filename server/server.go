@@ -13,6 +13,7 @@ import (
 	"github.com/jetsadawwts/go-microservices/modules/middleware/middlewareHandler"
 	"github.com/jetsadawwts/go-microservices/modules/middleware/middlewareRepository"
 	"github.com/jetsadawwts/go-microservices/modules/middleware/middlewareUsecase"
+	"github.com/jetsadawwts/go-microservices/pkg/jwtauth"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -60,6 +61,8 @@ func Start(pctx context.Context, cfg *config.Config, db *mongo.Client) {
 		middleware: newMiddleware(cfg),
 	}
 
+	jwtauth.SetApiKey(cfg.Jwt.ApiSceretKey)
+
 	//Basic Middleware
 	//Request Timeout
 	s.app.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
@@ -91,6 +94,8 @@ func Start(pctx context.Context, cfg *config.Config, db *mongo.Client) {
 	case "payment":
 		s.paymentService()
 	}
+
+
 
 	//Graceful Shutdown
 	quit := make(chan os.Signal, 1)
