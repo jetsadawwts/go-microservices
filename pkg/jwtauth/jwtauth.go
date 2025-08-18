@@ -143,11 +143,11 @@ func ParseToken(secret string, tokenString string) (*AuthMapClaims, error) {
 	})
 	if err != nil {
 		if errors.Is(err, jwt.ErrTokenMalformed) {
-			return nil, errors.New("error: token malformed")
+			return nil, errors.New("error: token format is invalid")
 		} else if errors.Is(err, jwt.ErrTokenExpired) {
-			return nil, errors.New("error: token expired")
+			return nil, errors.New("error: token is expired")
 		} else {
-			return nil, errors.New("error: ")
+			return nil, errors.New("error: token is invalid")
 		}
 	}
 

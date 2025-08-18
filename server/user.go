@@ -35,8 +35,8 @@ func (s *server) userService() {
 	user.GET("", s.healthCheckService)
 
 	user.POST("/user/register", httpHandler.CreateUser)
+	user.POST("/user/add-money", httpHandler.AddUserMoney, s.middleware.JwtAuthorization)
 	user.GET("/user/:user_id", httpHandler.FindOneUserProfile)
-	user.POST("/user/add-money", httpHandler.AddUserMoney)
-	user.GET("/user/account/:user_id", httpHandler.GetUserSavingAccount)
+	user.GET("/user/saving-account/my-account", httpHandler.GetUserSavingAccount, s.middleware.JwtAuthorization)
 
 }

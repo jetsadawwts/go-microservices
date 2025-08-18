@@ -9,6 +9,7 @@ import (
 
 	"github.com/jetsadawwts/go-microservices/config"
 	"github.com/jetsadawwts/go-microservices/modules/auth"
+	authPb "github.com/jetsadawwts/go-microservices/modules/auth/authPb"
 	"github.com/jetsadawwts/go-microservices/modules/auth/authRepository"
 	"github.com/jetsadawwts/go-microservices/modules/user"
 	userPb "github.com/jetsadawwts/go-microservices/modules/user/userPb"
@@ -21,6 +22,8 @@ type (
 		Login(pctx context.Context, cfg *config.Config, req *auth.UserLoginReq) (*auth.ProfileIntercepter, error)
 		RefreshToken(pctx context.Context, cfg *config.Config, req *auth.RefreshTokenReq) (*auth.ProfileIntercepter, error) 
 		Logout(pctx context.Context, credentialId string) (int64, error)
+		AccessTokenSearch(pctx context.Context, accessToken string) (*authPb.AccessTokenSearchRes, error)
+		RolesCount(pctx context.Context) (*authPb.RolesCountRes, error)
 	}
 
 	authUsecase struct {
@@ -159,4 +162,37 @@ func (u *authUsecase) RefreshToken(pctx context.Context, cfg *config.Config, req
 func (u *authUsecase) Logout(pctx context.Context, credentialId string) (int64, error) {
 	return u.authRepository.DeleteOneUserCredential(pctx, credentialId)
 }
+
+func (u *authUsecase) AccessTokenSearch(pctx context.Context, accessToken string) (*authPb.AccessTokenSearchRes, error) {
+	credential, err := u.authRepository.FindOneAccessToken(pctx, accessToken)
+	if err != nil {
+		return &authPb.AccessTokenSearchRes{
+			IsValid: false,
+		}, err
+	}
+
+	if credential == nil {
+		return &authPb.AccessTokenSearchRes{
+			IsValid: false,
+		}, errors.New("error: access token is invalid")
+	}
+
+	return &authPb.AccessTokenSearchRes{
+		IsValid: true,
+	}, nil
+}
+
+func (u *authUsecase) RolesCount(pctx context.Context) (*authPb.RolesCountRes, error) {
+	result, err := u.authRepository.RolesCount(pctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &authPb.RolesCountRes{
+		Count: result,
+	}, nil
+
+}
+	
+
  
