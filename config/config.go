@@ -52,7 +52,7 @@ type (
 	}
 
 	Paginate struct {
-		ItemNextPageBasedUrl      string
+		ProductNextPageBasedUrl      string
 		InventoryNextPageBasedUrl string
 	}
 )
@@ -103,7 +103,7 @@ func LoadConfig(path string) Config {
 			PaymentUrl:   os.Getenv("GRPC_PAYMENT_URL"),
 		},
 		Paginate: Paginate{
-			ItemNextPageBasedUrl:      os.Getenv("PAGINATE_PRODUCT_NEXT_PAGE_BASED_URL"),
+			ProductNextPageBasedUrl:      os.Getenv("PAGINATE_PRODUCT_NEXT_PAGE_BASED_URL"),
 			InventoryNextPageBasedUrl: os.Getenv("PAGINATE_INVENTORY_NEXT_PAGE_BASED_URL"),
 		},
 	}

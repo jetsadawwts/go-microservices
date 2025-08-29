@@ -21,6 +21,11 @@ type (
 	}
 
 	NextPaginate struct {
+		Start string `json:"start"`
+		Href string `json:"href"`
+	}
+
+	KafkaOffset struct {
 		Offset int64 `json:"offset" bson:"offset"`
 	}
 )

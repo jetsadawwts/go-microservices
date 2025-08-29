@@ -25,10 +25,14 @@ func (s *server) productService() {
 		grpcServer.Serve(lis)
 	}()
 
-	_ = httpHandler
 	_ = grpcHandler
 
 	product := s.app.Group("/product_v1")
 
 	product.GET("", s.healthCheckService)
+	product.POST("/product", s.middleware.JwtAuthorization(s.middleware.RbacAuthorization(httpHandler.CreateProduct,[]int{1,0})))
+	product.GET("/product/:product_id", httpHandler.FindOneProduct)
+	product.GET("/product", httpHandler.FindManyProducts)
+	product.PATCH("/product/:product_id", s.middleware.JwtAuthorization(s.middleware.RbacAuthorization(httpHandler.EditProduct,[]int{1,0})))
+	product.PATCH("/product/:product_id/is-activated", s.middleware.JwtAuthorization(s.middleware.RbacAuthorization(httpHandler.EnableOrDisableProduct,[]int{1,0})))
 }
