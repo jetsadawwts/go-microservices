@@ -18,7 +18,7 @@ type (
 	}
 
 	ProductSearchReq struct {
-		Title string `json:"title"`
+		Title string `query:"title" validate:"max=64"`
 		models.PaginateReq
 	}
 
