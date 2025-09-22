@@ -5,7 +5,7 @@ option go_package = "github.com/jetsadawwts/go-microservices";
 
 //Structures
 message FindProductsInIdsReq {
-    repeated int32 ids = 1;
+    repeated string ids = 1;
 }
 
 message FindProductsInIdsRes {

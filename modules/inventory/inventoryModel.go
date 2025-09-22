@@ -13,11 +13,13 @@ type (
 
 	ProductInInventory struct {
 		InventoryId string `json:"inventory_id"`
+		UserId string `json:"user_id"`
 		*product.ProductShowCase
 	}
 
-	UserInventory struct {
-		UserId string `json:"user_id"`
-		*models.PaginateRes
+	InventorySearchReq struct {
+		models.PaginateReq
 	}
+
+
 )

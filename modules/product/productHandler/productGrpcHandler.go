@@ -21,5 +21,5 @@ func NewproductGrpcHandler(productUsecase productUsecase.ProductUsecaseService) 
 }
 
 func (g *productGrpcHandler) FindProductsInIds(ctx context.Context, req *productPb.FindProductsInIdsReq) (*productPb.FindProductsInIdsRes, error) {
-	return nil, nil
+	return g.productUsecase.FindProductsInIds(ctx, req)
 }
