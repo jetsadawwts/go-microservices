@@ -9,6 +9,7 @@ import (
 
 	"github.com/jetsadawwts/go-microservices/modules/models"
 	"github.com/jetsadawwts/go-microservices/modules/product"
+	productPb "github.com/jetsadawwts/go-microservices/modules/product/productPb"
 	"github.com/jetsadawwts/go-microservices/modules/product/productRepository"
 	"github.com/jetsadawwts/go-microservices/pkg/utils"
 	"go.mongodb.org/mongo-driver/bson"
@@ -23,6 +24,7 @@ type (
 		FindManyProducts(pctx context.Context, basePaginateUrl string, req *product.ProductSearchReq) (*models.PaginateRes, error)
 		EditProduct(pctx context.Context, productId string, req *product.ProductUpdateReq) (*product.ProductShowCase, error)
 		EnableOrDisableProduct(pctx context.Context, productId string) (bool, error)
+		FindProductsInIds(pctx context.Context, req *productPb.FindProductsInIdsReq) (*productPb.FindProductsInIdsRes, error) 
 	}
 
 	productUsecase struct {
@@ -81,7 +83,6 @@ func (u *productUsecase) FindManyProducts(pctx context.Context, basePaginateUrl 
 
 	fmt.Printf("req: %+v\n", req)
 	
-
 	// Filter
 	if req.Start != "" {
 		req.Start = strings.TrimPrefix(req.Start, "product:")
@@ -190,5 +191,37 @@ func (u *productUsecase) EnableOrDisableProduct(pctx context.Context, productId 
 	}
 
 	return !result.UsageStatus, nil
+}
+
+func (u *productUsecase) FindProductsInIds(pctx context.Context, req *productPb.FindProductsInIdsReq) (*productPb.FindProductsInIdsRes, error) {
+	filter := bson.D{}
+
+	objectIds := make([]primitive.ObjectID, 0)
+	for _, productId := range req.Ids {
+		objectIds = append(objectIds, utils.ConvertToObjectId(strings.TrimPrefix(productId, "product:")))
+	}
+
+	filter = append(filter, bson.E{"_id", bson.D{{"$in", objectIds}}})
+	filter = append(filter, bson.E{"usage_status", true})
+
+	results, err := u.productRepository.FindManyProducts(pctx, filter, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resultsToRes := make([]*productPb.Product, 0)
+	for _, result := range results {
+		resultsToRes = append(resultsToRes, &productPb.Product{
+			Id: result.ProductId,
+			Title: result.Title,
+			Price: result.Price,
+			Damage: int32(result.Damage),
+			ImageUrl: result.ImageUrl,
+		})
+	}
+	
+	return &productPb.FindProductsInIdsRes{
+		Products: resultsToRes,
+	}, nil
 }
  

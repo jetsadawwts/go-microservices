@@ -33,4 +33,5 @@ func (s *server) inventoryService() {
 	inventory := s.app.Group("/inventory_v1")
 
 	inventory.GET("", s.healthCheckService)
+	inventory.GET("/inventory/:user_id", httpHandler.FindUserProducts, s.middleware.JwtAuthorization, s.middleware.UserIdParamValidation)
 }
